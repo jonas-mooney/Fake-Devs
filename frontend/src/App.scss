@@ -1,0 +1,123 @@
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Roboto&display=swap');
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: 0;
+  font-family: 'Bebas Neue', cursive;
+  font-family: 'Roboto', sans-serif;
+
+}
+
+body {
+  background-color: #f9faff;
+  color: #000000;
+}
+
+// // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // 
+
+.body-content {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 3em 0;
+
+  //below code moves filter box to the left of the screen on fullscreen
+
+  // @media only screen and (min-width: 1200px) {
+  //   flex-direction: row;
+  //   justify-content: space-around;
+  // }
+}
+
+// // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // 
+
+
+.devDisplay {
+  width: 70vw;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.allDevsContainer {
+  width: 64em;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  max-width: 826px;
+}
+
+.devBox {
+  width: 250px;
+  padding: 20px;
+  background-color: #0068f5;
+  margin: 20px;
+  border-radius: 8px;
+  border: 1px solid #013f95;
+  box-shadow: 4px 4px 8px #959595;
+}
+
+.starhourly {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+// // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // 
+
+.filterBox {
+  width: 20em;
+  display: flex;
+  justify-content: flex-end;
+  padding: 1em;
+  background-color: #20406e;
+
+  .sliderBox {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    
+    .SliderRoot {
+      position: relative;
+      display: flex;
+      align-items: center;
+      user-select: none;
+      touch-action: none;
+      width: 150px;
+      height: 20px;
+    }
+    
+    .SliderTrack {
+      background-color: #626262;
+      position: relative;
+      flex-grow: 1;
+      border-radius: 9999px;
+      height: 3px;
+    }
+    
+    .SliderRange {
+      position: absolute;
+      background-color: white;
+      border-radius: 9999px;
+      height: 100%;
+    }
+    
+    .SliderThumb {
+      display: block;
+      width: 15px;
+      height: 15px;
+      background-color: white;
+      box-shadow: 0 2px 6px #000000;
+      border-radius: 10px;
+    }
+    .SliderThumb:hover {
+    }
+    .SliderThumb:focus {
+      outline: none;
+      box-shadow: 0 0 0 3px #20406e;
+    }
+  }
+}

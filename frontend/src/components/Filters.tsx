@@ -1,4 +1,5 @@
 import PriceRange from "./PriceRange"
+import HighLow from "./HighLow"
 import "../App.scss"
 import { useState } from "react"
 import axios from "axios"
@@ -24,6 +25,7 @@ const Filters: React.FC<FilterProps> = ({handleSubmit}) => {
 
   return (
     <div className="filterBox">
+    <HighLow />
     <PriceRange handleRangeChange={handleRangeChange} range={range} />
     <button onClick={() => handleSubmit(range)}>Submit</button>
     {/* I initially tried pass the function as a prop but to get the return value of the function it must be invoked */}

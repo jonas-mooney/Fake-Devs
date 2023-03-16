@@ -69,16 +69,17 @@ body {
 // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // 
 
 .filterBox {
-  width: 20em;
+  width: 22em;
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-around;
   padding: 1em;
-  background-color: #20406e;
+  background-color: #618bc7;
 
   .sliderBox {
     display: flex;
     flex-direction: column;
     align-items: center;
+    background-color: skyblue;
     
     .SliderRoot {
       position: relative;
@@ -120,4 +121,25 @@ body {
       box-shadow: 0 0 0 3px #20406e;
     }
   }
+
+  .highLow {
+    width: 6em;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+
+    button {
+      background-color: white;
+      height: 2.5em;
+      width: 3em;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid black;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+  }
+
+
 }

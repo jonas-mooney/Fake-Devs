@@ -4,30 +4,32 @@ import "../App.scss"
 import { useState } from "react"
 import axios from "axios"
 
+// interface OrderRangeValues {
+//   order: number;
+//   range: number[];
+// }
+
 interface FilterProps {
-  handleSubmit: (props: any) => void;
+  handleSubmit: (args: object) => void;
 }
 
-const Filters: React.FC<FilterProps> = ({handleSubmit}) => {
+const Filters = ({ handleSubmit }: FilterProps) => {
   const [range, setRange] = useState([25,75])
+  const [order, setOrder] = useState(0)
 
-  const handleRangeChange = (props: any) => {
+  const handleRangeChange = (props: Array<number>) => {
     setRange(props)
   }
 
-  let filterData = {
-    range: range,
+  const handleOrderChange = (props: number) => {
+    setOrder(props)
   }
-
-  // const filterSubmit = () => {
-  //   axios.get()
-  // }
 
   return (
     <div className="filterBox">
-    <HighLow />
+    <HighLow handleOrderChange={handleOrderChange} />
     <PriceRange handleRangeChange={handleRangeChange} range={range} />
-    <button onClick={() => handleSubmit(range)}>Submit</button>
+    <button onClick={() => handleSubmit({order, range})}>Submit</button>
     {/* I initially tried pass the function as a prop but to get the return value of the function it must be invoked */}
     </div>
   )

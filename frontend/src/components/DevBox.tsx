@@ -27,11 +27,12 @@ const DevBox = () => {
     // You can also add a return statement to useEffect that will fire on unmount
     // see https://sebhastian.com/react-usestate-useeffect-hooks/
 
-    const handleSubmit = (range: any) => {
-        const [low, high] = range
+    const handleSubmit = (filterData: object) => {
+        console.log(filterData)
+        
         async function fetchData() {
             try {
-                axios.post('http://localhost:5444/filter', range).then((res) => {
+                axios.post('http://localhost:5444/filter', filterData).then((res) => {
                     setDevs(res.data)
                 })
 

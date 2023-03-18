@@ -1,12 +1,17 @@
-import { useState } from 'react'
+import { FC, useState } from 'react'
 import '../App.scss'
 
-const HighLow = () => {
+interface HighLowProps {
+  handleOrderChange: (arg: number) => void;
+}
+
+const HighLow = ({handleOrderChange}: HighLowProps) => {
   const [isActive, setIsActive] = useState(0)
 
   const handleClick = (prop: number) => {
     if (prop == isActive) setIsActive(0)
     else setIsActive(prop)
+    handleOrderChange(isActive)
   }
 
   return (

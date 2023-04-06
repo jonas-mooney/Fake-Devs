@@ -2,12 +2,15 @@ import DevBox from "./DevBox"
 import Filters from "./Filters"
 import '../App.scss'
 
-const Body = () => {
+interface HandleLoadingFunc {
+  handleLoading: (arg: boolean) => void;
+}
+
+const Body = (prop: HandleLoadingFunc) => {
   
   return (
     <div className="body-content">
-      {/* <Filters /> */}
-      <DevBox />
+      <DevBox handleLoading={prop.handleLoading} />
     </div>
   )
 }

@@ -5,12 +5,16 @@ import '../App.scss'
 
 import Filters from "./Filters"
 
+interface HandleLoadingFunc {
+    handleLoading: (arg: boolean) => void;
+  }
 
-const DevBox = () => {
+const DevBox = (prop: HandleLoadingFunc) => {
   const [devs, setDevs] = useState([])
   const [query, setQuery] = useState([])
     
     useEffect( () => {
+        prop.handleLoading(true)
         async function fetchData() {
             try {
                 const res = await axios.get('http://localhost:5444/');
@@ -20,6 +24,7 @@ const DevBox = () => {
             }
         }
         fetchData();
+        prop.handleLoading(false)
     }, []);
 
     // The second argument of useEffect function is referred to as the “dependency array”. When the variable included inside the array didn’t change, the function passed as the first argument won’t be executed.
@@ -35,18 +40,6 @@ const DevBox = () => {
                 axios.post('http://localhost:5444/filter', filterData).then((res) => {
                     setDevs(res.data)
                 })
-
-                // Could also be written as:
-                // const res = axios({
-                //     method: 'post',
-                //     url: 'http://localhost:5444/filter',
-                //     // headers: {"Access-Control-Allow-Origin": "*"},
-                //     data:   {
-                //             range: range,
-                //         },
-                // })
-
-                // setDevs(res.data);
 
             } catch (err) {
                 console.log(err);

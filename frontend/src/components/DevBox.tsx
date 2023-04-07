@@ -12,13 +12,18 @@ interface HandleLoadingFunc {
 const DevBox = (prop: HandleLoadingFunc) => {
   const [devs, setDevs] = useState([])
   const [query, setQuery] = useState([])
+  const [pageTotal, setPageTotal] = useState(0)
+  const [pageNumber, setPageNumber] = useState(1)
+
+  const pages = new Array(pageTotal).fill(null).map((v, i) => i)
     
     useEffect( () => {
         prop.handleLoading(true)
         async function fetchData() {
             try {
                 const res = await axios.get('http://localhost:5444/');
-                setDevs(res.data);
+                setDevs(res.data.devs);
+                setPageTotal(res.data.totalPages)
             } catch (err) {
                 console.log(err);
             }
@@ -37,11 +42,12 @@ const DevBox = (prop: HandleLoadingFunc) => {
         
         async function fetchData() {
             try {
-                axios.post('http://localhost:5444/filter', filterData).then((res) => {
-                    setDevs(res.data)
+                axios.post(`http://localhost:5444/filter?page=${pageNumber}`, filterData).then((res) => {
+                    setPageTotal(res.data.totalPages)
+                    setDevs(res.data.devs)
                 })
 
-            } catch (err) {
+            } catch (err) { 
                 console.log(err);
             }
         };
@@ -70,7 +76,12 @@ const DevBox = (prop: HandleLoadingFunc) => {
         <div className="allDevsContainer">
             {devList}
         </div>
-        <button>yolo</button>
+        {pages.map((pageIndex) => (
+            <button key={pageIndex} onClick={() => setPageNumber(pageIndex)}>{pageIndex + 1}</button>
+            // at this point, the api call will need to take place on pageNumber state update.
+            // Considering combining my useEffect with the handleSubmit function so that they can both
+            // depend on that state.
+        ))}
     </div>
     </>
     )

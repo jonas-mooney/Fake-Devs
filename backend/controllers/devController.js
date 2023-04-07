@@ -16,7 +16,7 @@ const getFilteredDevs = asyncHandler(async (req, res) => {
 
   const devs = await Dev.find({
     hourly_rate: { $gte: req.body.range[0], $lte: req.body.range[1] }
-  }).sort({ hourly_rate: priceParam, star_rating: starParam }).limit(30)
+  }).sort({ hourly_rate: priceParam, star_rating: starParam }).limit(10)
     
   res.status(200).json(devs)
 })

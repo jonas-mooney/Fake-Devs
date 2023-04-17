@@ -10,13 +10,27 @@ interface HandleLoadingFunc {
   }
 
 const DevBox = (prop: HandleLoadingFunc) => {
+    // refactor all of these useState into a useReducer
   const [devs, setDevs] = useState([])
   const [query, setQuery] = useState([])
   const [pageTotal, setPageTotal] = useState(0)
   const [pageNumber, setPageNumber] = useState(1)
+  const [paginationNumbersDisplayed, setPaginationNumbersDisplayed] = useState([])
 
   const pages = new Array(pageTotal).fill(null).map((v, i) => i)
+
+  // lastDigit(123)
+
+  const paginationCalc = () => {
+    const p = 34
+    const lastDigit = (num: number) => num % 10;
+    const precedingDigits = (num: number) => {
+        
+    }
+    if (lastDigit(p) )
     
+  }
+
     useEffect( () => {
         prop.handleLoading(true)
         async function fetchData() {
@@ -52,7 +66,7 @@ const DevBox = (prop: HandleLoadingFunc) => {
             }
         };
         fetchData();
-    }
+    } 
 
     const devList = devs.map(({first_name, last_name, email, hourly_rate, star_rating}) =>
             <div key={uuidv4()} className='devBox'>
@@ -80,7 +94,7 @@ const DevBox = (prop: HandleLoadingFunc) => {
             <button key={pageIndex} onClick={() => setPageNumber(pageIndex)}>{pageIndex + 1}</button>
             // at this point, the api call will need to take place on pageNumber state update.
             // Considering combining my useEffect with the handleSubmit function so that they can both
-            // depend on that state.
+            // depend on that state. 
         ))}
     </div>
     </>

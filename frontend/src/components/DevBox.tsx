@@ -12,26 +12,15 @@ interface HandleLoadingFunc {
 const DevBox = (prop: HandleLoadingFunc) => {
     // refactor all of these useState into a useReducer
   const [devs, setDevs] = useState([])
-  const [query, setQuery] = useState([])
+  const [queryObject, setQueryObject] = useState({
+
+  })
   const [pageTotal, setPageTotal] = useState(0)
   const [pageNumber, setPageNumber] = useState(1)
   const [paginationNumbersDisplayed, setPaginationNumbersDisplayed] = useState([])
 
   const pages = new Array(pageTotal).fill(null).map((v, i) => i)
-
-  // lastDigit(123)
-
-  const paginationCalc = () => {
-    const p = 34
-    const lastDigit = (num: number) => num % 10;
-    const precedingDigits = (num: number) => {
-        
-    }
-    if (lastDigit(p)) {
-        
-    }
-    
-  }
+  const pagesSlice = pages.slice(pageNumber, pageNumber + 5)
 
     useEffect( () => {
         prop.handleLoading(true)
@@ -55,12 +44,12 @@ const DevBox = (prop: HandleLoadingFunc) => {
 
     const handleSubmit = (filterData: object) => {
         console.log(filterData)
-        
+
         async function fetchData() {
             try {
-                axios.post(`http://localhost:5444/filter?page=${pageNumber}`, filterData).then((res) => {
-                    setPageTotal(res.data.totalPages)
+                axios.post(`http://localhost:5444/devs?page=${pageNumber}`, filterData).then((res) => {
                     setDevs(res.data.devs)
+                    setPageTotal(res.data.totalPages)
                 })
 
             } catch (err) { 
@@ -68,7 +57,7 @@ const DevBox = (prop: HandleLoadingFunc) => {
             }
         };
         fetchData();
-    } 
+    }
 
     const devList = devs.map(({first_name, last_name, email, hourly_rate, star_rating}) =>
             <div key={uuidv4()} className='devBox'>
@@ -92,7 +81,7 @@ const DevBox = (prop: HandleLoadingFunc) => {
         <div className="allDevsContainer">
             {devList}
         </div>
-        {pages.map((pageIndex) => (
+        {pagesSlice.map((pageIndex) => (
             <button key={pageIndex} onClick={() => setPageNumber(pageIndex)}>{pageIndex + 1}</button>
             // at this point, the api call will need to take place on pageNumber state update.
             // Considering combining my useEffect with the handleSubmit function so that they can both
@@ -105,3 +94,4 @@ const DevBox = (prop: HandleLoadingFunc) => {
 
 export default DevBox
 
+// devboxrefactor

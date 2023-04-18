@@ -27,7 +27,9 @@ const DevBox = (prop: HandleLoadingFunc) => {
     const precedingDigits = (num: number) => {
         
     }
-    if (lastDigit(p) )
+    if (lastDigit(p)) {
+        
+    }
     
   }
 

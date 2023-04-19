@@ -7,13 +7,14 @@ import Filters from "./Filters"
 
 interface HandleLoadingFunc {
     handleLoading: (arg: boolean) => void;
-  }
+}
 
 const DevBox = (prop: HandleLoadingFunc) => {
     // refactor all of these useState into a useReducer
   const [devs, setDevs] = useState([])
   const [queryObject, setQueryObject] = useState({
-
+    highLow: 0,
+    starDescending: false,
   })
   const [pageTotal, setPageTotal] = useState(0)
   const [pageNumber, setPageNumber] = useState(1)
@@ -23,19 +24,34 @@ const DevBox = (prop: HandleLoadingFunc) => {
   const pagesSlice = pages.slice(pageNumber, pageNumber + 5)
 
     useEffect( () => {
-        prop.handleLoading(true)
+        // prop.handleLoading(true)
+        // async function fetchData() {
+        //     try {
+        //         const res = await axios.get('http://localhost:5444/');
+        //         setDevs(res.data.devs);
+        //         setPageTotal(res.data.totalPages)
+        //     } catch (err) {
+        //         console.log(err);
+        //     }
+        // }
+        // fetchData();
+        // prop.handleLoading(false)
+
         async function fetchData() {
             try {
-                const res = await axios.get('http://localhost:5444/');
-                setDevs(res.data.devs);
-                setPageTotal(res.data.totalPages)
-            } catch (err) {
+                axios.post(`http://localhost:5444/devs?page=${pageNumber}`, queryObject).then((res) => {
+                    setDevs(res.data.devs)
+                    setPageTotal(res.data.totalPages)
+                    console.log(res)
+                })
+
+            } catch (err) { 
                 console.log(err);
             }
-        }
+        };
         fetchData();
-        prop.handleLoading(false)
-    }, []);
+
+    }, [queryObject]);
 
     // The second argument of useEffect function is referred to as the “dependency array”. When the variable included inside the array didn’t change, the function passed as the first argument won’t be executed.
     // The empty array indicates that the effect doesn’t have any dependencies to watch for change, and without a trigger, it won’t be run after the component is mounted.
@@ -44,19 +60,7 @@ const DevBox = (prop: HandleLoadingFunc) => {
 
     const handleSubmit = (filterData: object) => {
         console.log(filterData)
-
-        async function fetchData() {
-            try {
-                axios.post(`http://localhost:5444/devs?page=${pageNumber}`, filterData).then((res) => {
-                    setDevs(res.data.devs)
-                    setPageTotal(res.data.totalPages)
-                })
-
-            } catch (err) { 
-                console.log(err);
-            }
-        };
-        fetchData();
+        setQueryObject({...queryObject, filterData})
     }
 
     const devList = devs.map(({first_name, last_name, email, hourly_rate, star_rating}) =>
@@ -93,5 +97,3 @@ const DevBox = (prop: HandleLoadingFunc) => {
 }
 
 export default DevBox
-
-// devboxrefactor

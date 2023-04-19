@@ -16,7 +16,6 @@ const getFilteredDevs = asyncHandler(async (req, res) => {
   let priceParam = req.body.order.highLow
   let starParam = 0
   const pageNumber = req.query.page
-  console.log(req.body)
 
   req.body.order.starDescending ? starParam = -1 : starParam = 0
   const total = await Dev.countDocuments({});

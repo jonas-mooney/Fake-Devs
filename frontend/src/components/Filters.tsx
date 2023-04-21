@@ -4,13 +4,21 @@ import "../App.scss"
 import { useState } from "react"
 import axios from "axios"
 
+interface FilterData {
+  order: {
+      highLow: number;
+      starDescending: boolean;
+  }
+  range: number[]
+}
+
 interface FilterProps {
-  handleSubmit: (args: object) => void;
+  handleSubmit: (data: FilterData) => void;
 }
 
 const Filters = ({ handleSubmit }: FilterProps) => {
   const [range, setRange] = useState([25,75])
-  const [order, setOrder] = useState({})
+  const [order, setOrder] = useState({ highLow: 0, starDescending: false })
 
   const handleRangeChange = (props: Array<number>) => {
     setRange(props)
@@ -31,3 +39,4 @@ const Filters = ({ handleSubmit }: FilterProps) => {
 }
 
 export default Filters
+

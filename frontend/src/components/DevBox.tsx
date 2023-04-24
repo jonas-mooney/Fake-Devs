@@ -7,14 +7,25 @@ import Filters from "./Filters"
 
 interface HandleLoadingFunc {
     handleLoading: (arg: boolean) => void;
-  }
+}
+
+interface FilterData {
+    order: {
+        highLow: number;
+        starDescending: boolean;
+    }
+    range: number[]
+}
 
 const DevBox = (prop: HandleLoadingFunc) => {
     // refactor all of these useState into a useReducer
   const [devs, setDevs] = useState([])
-  const [queryObject, setQueryObject] = useState({
 
+  const [queryObject, setQueryObject] = useState({
+    order: { highLow: 0, starDescending: false },
+    range: [ 25, 40 ]
   })
+
   const [pageTotal, setPageTotal] = useState(0)
   const [pageNumber, setPageNumber] = useState(1)
   const [paginationNumbersDisplayed, setPaginationNumbersDisplayed] = useState([])
@@ -23,31 +34,13 @@ const DevBox = (prop: HandleLoadingFunc) => {
   const pagesSlice = pages.slice(pageNumber, pageNumber + 5)
 
     useEffect( () => {
-        prop.handleLoading(true)
-        async function fetchData() {
-            try {
-                const res = await axios.get('http://localhost:5444/');
-                setDevs(res.data.devs);
-                setPageTotal(res.data.totalPages)
-            } catch (err) {
-                console.log(err);
-            }
-        }
-        fetchData();
-        prop.handleLoading(false)
-    }, []);
-
-    // The second argument of useEffect function is referred to as the “dependency array”. When the variable included inside the array didn’t change, the function passed as the first argument won’t be executed.
-    // The empty array indicates that the effect doesn’t have any dependencies to watch for change, and without a trigger, it won’t be run after the component is mounted.
-    // You can also add a return statement to useEffect that will fire on unmount
-    // see https://sebhastian.com/react-usestate-useeffect-hooks/
-
-    const handleSubmit = (filterData: object) => {
-        console.log(filterData)
+        // prop.handleLoading(true)
+        // prop.handleLoading(false)
 
         async function fetchData() {
+            // console.log(queryObject)
             try {
-                axios.post(`http://localhost:5444/devs?page=${pageNumber}`, filterData).then((res) => {
+                axios.post(`http://localhost:5444/devs?page=${pageNumber}`, queryObject).then((res) => {
                     setDevs(res.data.devs)
                     setPageTotal(res.data.totalPages)
                 })
@@ -57,6 +50,20 @@ const DevBox = (prop: HandleLoadingFunc) => {
             }
         };
         fetchData();
+
+    }, [queryObject]);
+
+    // The second argument of useEffect function is referred to as the “dependency array”. When the variable included inside the array didn’t change, the function passed as the first argument won’t be executed.
+    // The empty array indicates that the effect doesn’t have any dependencies to watch for change, and without a trigger, it won’t be run after the component is mounted.
+    // You can also add a return statement to useEffect that will fire on unmount
+    // see https://sebhastian.com/react-usestate-useeffect-hooks/
+
+    const handleSubmit = (filterData: FilterData) => {
+        setQueryObject({
+            ...queryObject,
+            order: filterData.order,
+            range: filterData.range
+        })
     }
 
     const devList = devs.map(({first_name, last_name, email, hourly_rate, star_rating}) =>
@@ -93,5 +100,3 @@ const DevBox = (prop: HandleLoadingFunc) => {
 }
 
 export default DevBox
-
-// devboxrefactor

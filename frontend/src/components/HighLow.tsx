@@ -1,8 +1,15 @@
 import { FC, useEffect, useState } from 'react'
 import '../App.scss'
 
+interface FilterData {
+  order: {
+      highLow: number;
+      starDescending: boolean;
+  }
+}
+
 interface HighLowProps {
-  handleOrderChange: (arg: object) => void;
+  handleOrderChange: (arg: FilterData["order"]) => void;
 }
 
 const HighLow = ({handleOrderChange}: HighLowProps) => {

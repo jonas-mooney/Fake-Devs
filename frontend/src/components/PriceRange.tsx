@@ -1,14 +1,22 @@
 import * as Slider from '@radix-ui/react-slider'
 import { useState } from 'react'
 
-const PriceRange = ({handleRangeChange, range}) => {
+interface HighLowProps {
+  handleRangeChange: (arg: number[]) => void;
+}
 
-  // const [value, setValue] = useState([25, 75])
+const PriceRange = (props: HighLowProps) => {
+  const [value, setValue] = useState([25, 75])
+
+  const handleValueChange = (values: number[]) => {
+    setValue(values)
+    props.handleRangeChange(values)
+  }
 
   return (
     <form className="sliderBox">
-      <h3>{`$${range[0]} - $${range[1]}`}</h3>
-      <Slider.Root className="SliderRoot" onValueChange={values => handleRangeChange(values)} defaultValue={[25, 75]} max={100} step={5} minStepsBetweenThumbs={1} aria-label="Volume">
+      <h3>{`$${value[0]} - $${value[1]}`}</h3>
+      <Slider.Root className="SliderRoot" onValueChange={handleValueChange} defaultValue={[25, 75]} max={100} step={5} minStepsBetweenThumbs={1} aria-label="Volume">
         <Slider.Track className="SliderTrack">
           <Slider.Range className="SliderRange" />
         </Slider.Track>

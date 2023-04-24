@@ -9,6 +9,14 @@ interface HandleLoadingFunc {
     handleLoading: (arg: boolean) => void;
 }
 
+interface FilterData {
+    order: {
+        highLow: number;
+        starDescending: boolean;
+    }
+    range: number[]
+}
+
 const DevBox = (prop: HandleLoadingFunc) => {
     // refactor all of these useState into a useReducer
   const [devs, setDevs] = useState([])
@@ -50,16 +58,12 @@ const DevBox = (prop: HandleLoadingFunc) => {
     // You can also add a return statement to useEffect that will fire on unmount
     // see https://sebhastian.com/react-usestate-useeffect-hooks/
 
-    const handleSubmit = (filterData: object) => {
-        console.log(filterData)
-        setQueryObject(queryObject => ({
+    const handleSubmit = (filterData: FilterData) => {
+        setQueryObject({
             ...queryObject,
-            filterData
-        }))
-
-        setTimeout(() => {
-            console.log(queryObject)
-        }, 2000)
+            order: filterData.order,
+            range: filterData.range
+        })
     }
 
     const devList = devs.map(({first_name, last_name, email, hourly_rate, star_rating}) =>

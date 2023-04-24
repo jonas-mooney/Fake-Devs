@@ -24,14 +24,14 @@ const Filters = ({ handleSubmit }: FilterProps) => {
     setRange(props)
   }
 
-  const handleOrderChange = (props: object) => {
+  const handleOrderChange = (props: FilterData["order"]) => {
     setOrder(props)
   }
 
   return (
     <div className="filterBox">
     <HighLow handleOrderChange={handleOrderChange} />
-    <PriceRange handleRangeChange={handleRangeChange} range={range} />
+    <PriceRange handleRangeChange={handleRangeChange} />
     <button onClick={() => handleSubmit({order, range})}>Submit</button>
     {/* I initially tried pass the function as a prop but to get the return value of the function it must be invoked */}
     </div>

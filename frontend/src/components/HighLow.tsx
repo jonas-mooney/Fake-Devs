@@ -6,6 +6,7 @@ interface FilterData {
       highLow: number;
       starDescending: boolean;
   }
+  range: number[]
 }
 
 interface HighLowProps {

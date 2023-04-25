@@ -14,36 +14,28 @@ interface HighLowProps {
 }
 
 const HighLow = ({handleOrderChange}: HighLowProps) => {
-  // const [isActive, setIsActive] = useState(0)
   const [isActive, setIsActive] = useState({
     highLow: 0,
     starDescending: false,
   })
 
-  const handleClick = async (prop: number | boolean) => {
+  const handleClick = async (prop: number) => {
     
-    switch(typeof prop) {
-      case 'number':
-        if (prop === isActive.highLow) {
-          setIsActive((prevState) => ({ ...prevState, highLow: 0 }))
+    switch(prop) {
+      case 1:
+        if (isActive.highLow === -1) {
+          setIsActive((prevState) => ({ ...prevState, highLow: 1 }))
         }
         else {
-          setIsActive((prevState) => ({ ...prevState, highLow: prop }))
+          setIsActive((prevState) => ({ ...prevState, highLow: -1 }))
         }
         break;
-      case 'boolean':
+      case 2:
         isActive.starDescending === false ? setIsActive((prevState) => ({ ...prevState, starDescending: true })) : setIsActive((prevState) => ({ ...prevState, starDescending: false }))
-        // if (prop === isActive.starDescending) {
-        //   setIsActive((prevState) => ({ ...prevState, starDescending: }))
-        // }
     }
-
-
     // else setIsActive(prop, () => handleOrderChange(isActive))
     // What could have been an alternative to useEffect, a callback function
     // on setIsActive, would wait until state is update before firing.
-
-    // else setIsActive(prop)
   }
 
   useEffect(() => {
@@ -52,20 +44,20 @@ const HighLow = ({handleOrderChange}: HighLowProps) => {
 
   return (
     <div className="highLow">
+      {/* <button
+        style={{
+          backgroundColor: isActive.highLow == 1 ? 'salmon' : '',
+          color: isActive.highLow == 1 ? 'white' : 'black',
+        }}
+        onClick={() => handleClick(1)}
+      >$↑</button> */}
+
       <button
         style={{
           backgroundColor: isActive.highLow == 1 ? 'salmon' : '',
           color: isActive.highLow == 1 ? 'white' : 'black',
         }}
         onClick={() => handleClick(1)}
-      >$↑</button>
-
-      <button
-        style={{
-          backgroundColor: isActive.highLow == -1 ? 'salmon' : '',
-          color: isActive.highLow == -1 ? 'white' : 'black',
-        }}
-        onClick={() => handleClick(-1)}
       >$↓</button>
 
       <button
@@ -73,7 +65,7 @@ const HighLow = ({handleOrderChange}: HighLowProps) => {
           backgroundColor: isActive.starDescending === true ? 'salmon' : '',
           color: isActive.starDescending === true ? 'white' : 'black',
         }}
-        onClick={() => handleClick(true)}
+        onClick={() => handleClick(2)}
       >⭐️</button>
     </div>
   )

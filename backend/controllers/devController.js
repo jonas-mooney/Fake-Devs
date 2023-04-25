@@ -14,7 +14,7 @@ const getAllDevs = asyncHandler(async (req, res) => {
 
 const getFilteredDevs = asyncHandler(async (req, res) => {
   let priceParam = req.body.order.highLow
-  let starParam = 0
+  let starParam = req.body.order.starDescending
   const pageNumber = req.query.page
 
   req.body.order.starDescending ? starParam = -1 : starParam = 0

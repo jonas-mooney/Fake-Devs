@@ -65,7 +65,6 @@ const DevBox = (prop: HandleLoadingFunc) => {
             range: filterData.range
         })
     }
-    //sdfsdfsdfsdf
 
     const devList = devs.map(({first_name, last_name, email, hourly_rate, star_rating}) =>
             <div key={uuidv4()} className='devBox'>

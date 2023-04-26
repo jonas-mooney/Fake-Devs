@@ -31,3 +31,4 @@ export default PriceRange
 
 
 // This file only runs alongside ts because alllowJS is set to true in tsconfig
+// old news

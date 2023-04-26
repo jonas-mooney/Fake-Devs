@@ -3,27 +3,29 @@ const asyncHandler = require("express-async-handler")
 const Dev = require('../models/devModel')
 const pageSize = 10
 
-const getAllDevs = asyncHandler(async (req, res) => {
-  const total = await Dev.countDocuments({});
-  const devs = await Dev.find({}).limit(10)
-  res.status(200).json({
-    totalPages: Math.ceil(total / pageSize),
-    devs
-  })
-})
-
 const getFilteredDevs = asyncHandler(async (req, res) => {
+  const total = await Dev.countDocuments({});
+  const pageNumber = req.query.page
   let priceParam = req.body.order.highLow
   let starParam = req.body.order.starDescending
-  const pageNumber = req.query.page
+  let devs
 
-  req.body.order.starDescending ? starParam = -1 : starParam = 0
-  const total = await Dev.countDocuments({});
+  if (starParam) {
+    devs = await Dev.find({
+      hourly_rate: { $gte: req.body.range[0], $lte: req.body.range[1] }
+    }).sort({ star_rating: -1 }).limit(pageSize)
+  }
+  else if (priceParam === 1) {
+    devs = await Dev.find({
+      hourly_rate: { $gte: req.body.range[0], $lte: req.body.range[1] }
+    }).sort({ hourly_rate: -1 }).limit(pageSize)
+  }
+  else {
+    devs = await Dev.find({
+      hourly_rate: { $gte: req.body.range[0], $lte: req.body.range[1] }
+    }).limit(pageSize)
+  }
 
-  const devs = await Dev.find({
-    hourly_rate: { $gte: req.body.range[0], $lte: req.body.range[1] }
-  }).sort({ hourly_rate: priceParam, star_rating: starParam }).limit(pageSize)
-    
   res.status(200).json({
     totalPages: Math.ceil(total / pageSize),
     devs
@@ -31,7 +33,6 @@ const getFilteredDevs = asyncHandler(async (req, res) => {
 })
 
 module.exports = {
-  getAllDevs,
   getFilteredDevs
 }
 

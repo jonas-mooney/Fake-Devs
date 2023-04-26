@@ -23,16 +23,21 @@ const HighLow = ({handleOrderChange}: HighLowProps) => {
     
     switch(prop) {
       case 1:
-        if (isActive.highLow === -1) {
-          setIsActive((prevState) => ({ ...prevState, highLow: 1 }))
+        if (isActive.highLow === 1) {
+          setIsActive((prevState) => ({ ...prevState, highLow: 0 }))
         }
         else {
-          setIsActive((prevState) => ({ ...prevState, highLow: -1 }))
+          setIsActive((prevState) => ({ ...prevState, highLow: 1, starDescending: false }))
         }
         break;
       case 2:
-        isActive.starDescending === false ? setIsActive((prevState) => ({ ...prevState, starDescending: true })) : setIsActive((prevState) => ({ ...prevState, starDescending: false }))
-    }
+        if (isActive.starDescending === false) {
+          setIsActive((prevState) => ({ ...prevState, starDescending: true, highLow: 0 }))
+        }
+        else {
+          setIsActive((prevState) => ({ ...prevState, starDescending: false }))
+        }
+      }
     // else setIsActive(prop, () => handleOrderChange(isActive))
     // What could have been an alternative to useEffect, a callback function
     // on setIsActive, would wait until state is update before firing.

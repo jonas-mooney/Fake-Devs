@@ -20,18 +20,20 @@ interface FilterData {
 const DevBox = (prop: HandleLoadingFunc) => {
     // refactor all of these useState into a useReducer
   const [devs, setDevs] = useState([])
-
-  const [queryObject, setQueryObject] = useState({
-    order: { highLow: 0, starDescending: false },
-    range: [ 25, 40 ]
-  })
-
   const [pageTotal, setPageTotal] = useState(0)
-  const [pageNumber, setPageNumber] = useState(1)
+//   const [pageNumber, setPageNumber] = useState(1)
   const [paginationNumbersDisplayed, setPaginationNumbersDisplayed] = useState([])
 
   const pages = new Array(pageTotal).fill(null).map((v, i) => i)
-  const pagesSlice = pages.slice(pageNumber, pageNumber + 5)
+
+  const [queryObject, setQueryObject] = useState({
+    order: { highLow: 0, starDescending: false },
+    range: [ 25, 40 ],
+    page: 1
+  })
+
+  const pagesSlice = pages.slice(queryObject.page, queryObject.page + 5)
+
 
     useEffect( () => {
         // prop.handleLoading(true)
@@ -40,7 +42,7 @@ const DevBox = (prop: HandleLoadingFunc) => {
         async function fetchData() {
             // console.log(queryObject)
             try {
-                axios.post(`http://localhost:5444/devs?page=${pageNumber}`, queryObject).then((res) => {
+                axios.post(`http://localhost:5444/devs?page=${queryObject.page}`, queryObject).then((res) => {
                     setDevs(res.data.devs)
                     setPageTotal(res.data.totalPages)
                 })
@@ -62,7 +64,14 @@ const DevBox = (prop: HandleLoadingFunc) => {
         setQueryObject({
             ...queryObject,
             order: filterData.order,
-            range: filterData.range
+            range: filterData.range,
+        })
+    }
+
+    const handlePagination = (arg: number) => {
+        setQueryObject({
+            ...queryObject,
+            page: arg
         })
     }
 
@@ -84,17 +93,17 @@ const DevBox = (prop: HandleLoadingFunc) => {
     <>
         <Filters handleSubmit={handleSubmit} />
 
-    <div className="devDisplay">
-        <div className="allDevsContainer">
-            {devList}
+        <div className="devDisplay">
+            <div className="allDevsContainer">
+                {devList}
+            </div>
+            {pagesSlice.map((pageIndex) => (
+                <button key={pageIndex} onClick={() => handlePagination(pageIndex)}>{pageIndex + 1}</button>
+                // at this point, the api call will need to take place on pageNumber state update.
+                // Considering combining my useEffect with the handleSubmit function so that they can both
+                // depend on that state.
+            ))}
         </div>
-        {pagesSlice.map((pageIndex) => (
-            <button key={pageIndex} onClick={() => setPageNumber(pageIndex)}>{pageIndex + 1}</button>
-            // at this point, the api call will need to take place on pageNumber state update.
-            // Considering combining my useEffect with the handleSubmit function so that they can both
-            // depend on that state. 
-        ))}
-    </div>
     </>
     )
 }

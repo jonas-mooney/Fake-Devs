@@ -98,7 +98,7 @@ const DevBox = (prop: HandleLoadingFunc) => {
                 {devList}
             </div>
             {pagesSlice.map((pageIndex) => (
-                <button key={pageIndex} onClick={() => handlePagination(pageIndex)}>{pageIndex + 1}</button>
+                <button key={pageIndex} onClick={() => handlePagination(pageIndex)}>{pageIndex}</button>
                 // at this point, the api call will need to take place on pageNumber state update.
                 // Considering combining my useEffect with the handleSubmit function so that they can both
                 // depend on that state.

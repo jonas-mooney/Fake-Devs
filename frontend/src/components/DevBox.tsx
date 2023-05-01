@@ -19,20 +19,24 @@ interface FilterData {
 
 const DevBox = (prop: HandleLoadingFunc) => {
     // refactor all of these useState into a useReducer
-  const [devs, setDevs] = useState([])
-  const [pageTotal, setPageTotal] = useState(0)
-//   const [pageNumber, setPageNumber] = useState(1)
-  const [paginationNumbersDisplayed, setPaginationNumbersDisplayed] = useState([])
+    const [devs, setDevs] = useState([])
+    const [pageTotal, setPageTotal] = useState(0)
+    //   const [pageNumber, setPageNumber] = useState(1)
+    const [paginationNumbersDisplayed, setPaginationNumbersDisplayed] = useState([])
 
-  const pages = new Array(pageTotal).fill(null).map((v, i) => i)
+  
+    const [queryObject, setQueryObject] = useState({
+        order: { highLow: 0, starDescending: false },
+        range: [ 25, 40 ],
+        page: 1
+    })
+    
+    const pages = new Array(pageTotal).fill(null).map((v, i) => i)
+    const pagesSlice = pages.slice(queryObject.page, queryObject.page + 5)
 
-  const [queryObject, setQueryObject] = useState({
-    order: { highLow: 0, starDescending: false },
-    range: [ 25, 40 ],
-    page: 1
-  })
-
-  const pagesSlice = pages.slice(queryObject.page, queryObject.page + 5)
+    // pagesSlice needs to be a slice of five at a time out of the page total.
+    // Instead of slicing on the queryObject.page, this should maintain its own state.
+    // Perhaps currentPage and paginationNumbersDisplayed
 
 
     useEffect( () => {
@@ -97,12 +101,13 @@ const DevBox = (prop: HandleLoadingFunc) => {
             <div className="allDevsContainer">
                 {devList}
             </div>
+            <button>less than</button>
+            {/* less than and greater than always shown to toggle not to the next group of five but */}
+            {/* to the very next page. */}
             {pagesSlice.map((pageIndex) => (
                 <button key={pageIndex} onClick={() => handlePagination(pageIndex)}>{pageIndex}</button>
-                // at this point, the api call will need to take place on pageNumber state update.
-                // Considering combining my useEffect with the handleSubmit function so that they can both
-                // depend on that state.
             ))}
+            <button>greater than</button>
         </div>
     </>
     )

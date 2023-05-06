@@ -22,7 +22,7 @@ const DevBox = (prop: HandleLoadingFunc) => {
     const [devs, setDevs] = useState([])
     const [pageTotal, setPageTotal] = useState(0)
     //   const [pageNumber, setPageNumber] = useState(1)
-    const [pageNumbersDisplayed, setPageNumbersDisplayed] = useState([1, 6])
+    const [pageNumbersDisplayed, setPageNumbersDisplayed] = useState<Array<number>>([1, 6])
 
   
     const [queryObject, setQueryObject] = useState({
@@ -73,20 +73,28 @@ const DevBox = (prop: HandleLoadingFunc) => {
         })
     }
 
-    const handlePagination = (arg: number) => {
+    const handlePaginationNumberClick = (arg: number) => {
         setQueryObject({
             ...queryObject,
             page: arg
         })
     }
 
-    const handlePageUpOrDown = (arg: boolean) => {
-        if (arg === true) {
-            console.log(pageNumbersDisplayed)
+    const handlePageViewUpOrDown = (arg: boolean) => {
+        const pageArrayCopy = [...pageNumbersDisplayed]
+        const pageArrayLast = pageArrayCopy.pop() ?? 0
+        const pageArrayFirst = pageArrayCopy.shift() ?? 0
+        // above line uses the nullish coalescing operator '??' to set pageArrayLast to 0 if the pageArrayCopy.pop() returns undefined.
+
+        if (arg === true && (pageArrayLast < pageTotal)) {
             const pageIncrement = pageNumbersDisplayed.map((s) => ++s)
+            setPageNumbersDisplayed(pageIncrement)
             // As trippy as this may seem, the prefix operator is needed.
             // If a postfix operator was used, the map function would return 's' before the increment took place.
-            console.log(pageIncrement)
+        }
+        else if (arg === false && (pageArrayFirst > 1)) {
+            const pageDecrement = pageNumbersDisplayed.map((s) => --s)
+            setPageNumbersDisplayed(pageDecrement)
         }
     }
 
@@ -112,13 +120,13 @@ const DevBox = (prop: HandleLoadingFunc) => {
             <div className="allDevsContainer">
                 {devList}
             </div>
-            <button onClick={() => handlePageUpOrDown(false)}>less than</button>
+            <button onClick={() => handlePageViewUpOrDown(false)}>less than</button>
             {/* less than and greater than always shown to toggle not to the next group of five but */}
             {/* to the very next page. */}
             {pagesSlice.map((pageIndex) => (
-                <button key={pageIndex} onClick={() => handlePagination(pageIndex)}>{pageIndex}</button>
+                <button key={pageIndex} onClick={() => handlePaginationNumberClick(pageIndex)}>{pageIndex}</button>
             ))}
-            <button onClick={() => handlePageUpOrDown(true)}>greater than</button>
+            <button onClick={() => handlePageViewUpOrDown(true)}>greater than</button>
         </div>
     </>
     )

@@ -121,8 +121,6 @@ const DevBox = (prop: HandleLoadingFunc) => {
                 {devList}
             </div>
             <button onClick={() => handlePageViewUpOrDown(false)}>less than</button>
-            {/* less than and greater than always shown to toggle not to the next group of five but */}
-            {/* to the very next page. */}
             {pagesSlice.map((pageIndex) => (
                 <button key={pageIndex} onClick={() => handlePaginationNumberClick(pageIndex)}>{pageIndex}</button>
             ))}

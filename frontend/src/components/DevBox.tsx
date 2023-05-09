@@ -4,6 +4,7 @@ import axios from 'axios'
 import '../App.scss'
 
 import Filters from "./Filters"
+import Pagination from "./Pagination";
 
 interface HandleLoadingFunc {
     handleLoading: (arg: boolean) => void;
@@ -120,6 +121,15 @@ const DevBox = (prop: HandleLoadingFunc) => {
             <div className="allDevsContainer">
                 {devList}
             </div>
+            
+            <Pagination 
+                totalPages={pageTotal}
+                currentPage={queryObject.page}
+                onPageChange={(newPage) => {
+                    setQueryObject({ ...queryObject, page: newPage })
+                }}
+            />
+
             <button onClick={() => handlePageViewUpOrDown(false)}>less than</button>
             {pagesSlice.map((pageIndex) => (
                 <button key={pageIndex} onClick={() => handlePaginationNumberClick(pageIndex)}>{pageIndex}</button>

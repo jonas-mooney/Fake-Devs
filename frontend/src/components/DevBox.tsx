@@ -81,23 +81,23 @@ const DevBox = (prop: HandleLoadingFunc) => {
     //     })
     // }
 
-    const handlePageViewUpOrDown = (arg: boolean) => {
-        const pageArrayCopy = [...pageNumbersDisplayed]
-        const pageArrayLast = pageArrayCopy.pop() ?? 0
-        const pageArrayFirst = pageArrayCopy.shift() ?? 0
-        // above line uses the nullish coalescing operator '??' to set pageArrayLast to 0 if the pageArrayCopy.pop() returns undefined.
+    // const handlePageViewUpOrDown = (pageUpOrDown: boolean) => {
+    //     const pageArrayCopy = [...pageNumbersDisplayed]
+    //     const pageArrayLast = pageArrayCopy.pop() ?? 0
+    //     const pageArrayFirst = pageArrayCopy.shift() ?? 0
+    //     // above line uses the nullish coalescing operator '??' to set pageArrayLast to 0 if the pageArrayCopy.pop() returns undefined.
 
-        if (arg === true && (pageArrayLast < pageTotal)) {
-            const pageIncrement = pageNumbersDisplayed.map((s) => ++s)
-            setPageNumbersDisplayed(pageIncrement)
-            // As trippy as this may seem, the prefix operator is needed.
-            // If a postfix operator was used, the map function would return 's' before the increment took place.
-        }
-        else if (arg === false && (pageArrayFirst > 1)) {
-            const pageDecrement = pageNumbersDisplayed.map((s) => --s)
-            setPageNumbersDisplayed(pageDecrement)
-        }
-    }
+    //     if (pageUpOrDown === true && (pageArrayLast < pageTotal)) {
+    //         const pageIncrement = pageNumbersDisplayed.map((s) => ++s)
+    //         setPageNumbersDisplayed(pageIncrement)
+    //         // As trippy as this may seem, the prefix operator is needed.
+    //         // If a postfix operator was used, the map function would return 's' before the increment took place.
+    //     }
+    //     else if (pageUpOrDown === false && (pageArrayFirst > 1)) {
+    //         const pageDecrement = pageNumbersDisplayed.map((s) => --s)
+    //         setPageNumbersDisplayed(pageDecrement)
+    //     }
+    // }
 
     const devList = devs.map(({first_name, last_name, email, hourly_rate, star_rating}) =>
             <div key={uuidv4()} className='devBox'>
@@ -129,13 +129,16 @@ const DevBox = (prop: HandleLoadingFunc) => {
                 onPageChange={(newPage) => {
                     setQueryObject({ ...queryObject, page: newPage })
                 }}
+                handleFivePageView={(pagesArray) => {
+                    setPageNumbersDisplayed(pagesArray)
+                }}
             />
 
-            <button onClick={() => handlePageViewUpOrDown(false)}>less than</button>
-            {/* {pagesSlice.map((pageIndex) => (
+            {/* <button onClick={() => handlePageViewUpOrDown(false)}>less than</button>
+            {pagesSlice.map((pageIndex) => (
                 <button key={pageIndex} onClick={() => handlePaginationNumberClick(pageIndex)}>{pageIndex}</button>
-            ))} */}
-            <button onClick={() => handlePageViewUpOrDown(true)}>greater than</button>
+            ))}
+            <button onClick={() => handlePageViewUpOrDown(true)}>greater than</button> */}
         </div>
     </>
     )

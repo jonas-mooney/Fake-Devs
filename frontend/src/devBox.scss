@@ -1,0 +1,41 @@
+
+
+
+
+
+.devDisplay {
+    width: 70vw;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+  
+.allDevsContainer {
+    width: 64em;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    max-width: 826px;
+}
+  
+.devBox {
+    width: 250px;
+    padding: 20px;
+    background-color: #0068f5;
+    margin: 20px;
+    border-radius: 8px;
+    border: 1px solid #013f95;
+    box-shadow: 4px 4px 8px #959595;
+}
+  
+.starhourly {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+/////////////////////////////////////////////////////////////
+
+.paginationButtonActive {
+    background-color: salmon;
+}

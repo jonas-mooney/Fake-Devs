@@ -10,19 +10,9 @@ interface HandleLoadingFunc {
     handleLoading: (arg: boolean) => void;
 }
 
-interface FilterData {
-    order: {
-        highLow: number;
-        starDescending: boolean;
-    }
-    range: number[]
-}
-
 const DevBox = (prop: HandleLoadingFunc) => {
-    // refactor all of these useState into a useReducer
     const [devs, setDevs] = useState([])
     const [pageTotal, setPageTotal] = useState(0)
-    //   const [pageNumber, setPageNumber] = useState(1)
     const [pageNumbersDisplayed, setPageNumbersDisplayed] = useState<Array<number>>([1, 6])
 
   
@@ -31,14 +21,6 @@ const DevBox = (prop: HandleLoadingFunc) => {
         range: [ 25, 40 ],
         page: 1
     })
-    
-    // const pages = new Array(pageTotal).fill(null).map((v, i) => i)
-    // // const pagesSlice = pages.slice(queryObject.page, queryObject.page + 5)
-    // const pagesSlice = pages.slice(pageNumbersDisplayed[0], pageNumbersDisplayed[1])
-
-    // pagesSlice needs to be a slice of five at a time out of the page total.
-    // Instead of slicing on the queryObject.page, this should maintain its own state.
-    // Perhaps currentPage and paginationNumbersDisplayed
 
 
     useEffect( () => {
@@ -66,41 +48,8 @@ const DevBox = (prop: HandleLoadingFunc) => {
     // You can also add a return statement to useEffect that will fire on unmount
     // see https://sebhastian.com/react-usestate-useeffect-hooks/
 
-    const handleSubmit = (filterData: FilterData) => {
-        setQueryObject({
-            ...queryObject,
-            order: filterData.order,
-            range: filterData.range,
-        })
-    }
-
-    // const handlePaginationNumberClick = (arg: number) => {
-    //     setQueryObject({
-    //         ...queryObject,
-    //         page: arg
-    //     })
-    // }
-
-    // const handlePageViewUpOrDown = (pageUpOrDown: boolean) => {
-    //     const pageArrayCopy = [...pageNumbersDisplayed]
-    //     const pageArrayLast = pageArrayCopy.pop() ?? 0
-    //     const pageArrayFirst = pageArrayCopy.shift() ?? 0
-    //     // above line uses the nullish coalescing operator '??' to set pageArrayLast to 0 if the pageArrayCopy.pop() returns undefined.
-
-    //     if (pageUpOrDown === true && (pageArrayLast < pageTotal)) {
-    //         const pageIncrement = pageNumbersDisplayed.map((s) => ++s)
-    //         setPageNumbersDisplayed(pageIncrement)
-    //         // As trippy as this may seem, the prefix operator is needed.
-    //         // If a postfix operator was used, the map function would return 's' before the increment took place.
-    //     }
-    //     else if (pageUpOrDown === false && (pageArrayFirst > 1)) {
-    //         const pageDecrement = pageNumbersDisplayed.map((s) => --s)
-    //         setPageNumbersDisplayed(pageDecrement)
-    //     }
-    // }
-
     const devList = devs.map(({first_name, last_name, email, hourly_rate, star_rating}) =>
-            <div key={uuidv4()} className='devBox'>
+            <div key={uuidv4()} className='devCard'>
                 <div className='namef'>
                     <span className='firstn'>{first_name + ' '}</span>
                     <span className='lastn'>{last_name}</span>
@@ -115,9 +64,16 @@ const DevBox = (prop: HandleLoadingFunc) => {
 
     return (
     <>
-        <Filters handleSubmit={handleSubmit} />
+        <Filters
+            handleSubmit={(filterData) => {
+                setQueryObject({
+                    ...queryObject,
+                    order: filterData.order,
+                    range: filterData.range,
+                })
+            }}
+        />
 
-        <div className="devDisplay">
             <div className="allDevsContainer">
                 {devList}
             </div>
@@ -133,13 +89,6 @@ const DevBox = (prop: HandleLoadingFunc) => {
                     setPageNumbersDisplayed(pagesArray)
                 }}
             />
-
-            {/* <button onClick={() => handlePageViewUpOrDown(false)}>less than</button>
-            {pagesSlice.map((pageIndex) => (
-                <button key={pageIndex} onClick={() => handlePaginationNumberClick(pageIndex)}>{pageIndex}</button>
-            ))}
-            <button onClick={() => handlePageViewUpOrDown(true)}>greater than</button> */}
-        </div>
     </>
     )
 }

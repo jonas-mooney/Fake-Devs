@@ -1,14 +1,4 @@
 
-
-
-
-
-.devDisplay {
-    width: 70vw;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-}
   
 .allDevsContainer {
     width: 64em;
@@ -18,7 +8,7 @@
     max-width: 826px;
 }
   
-.devBox {
+.devCard {
     width: 250px;
     padding: 20px;
     background-color: #0068f5;

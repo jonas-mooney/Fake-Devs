@@ -143,8 +143,9 @@ body {
       box-shadow: 0 2px 6px #000000;
       border-radius: 10px;
     }
-    .SliderThumb:hover {
-    }
+    // .SliderThumb:hover {
+    //   outline: #000000;
+    // }
     .SliderThumb:focus {
       outline: none;
       box-shadow: 0 0 0 3px #20406e;

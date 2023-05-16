@@ -32,9 +32,9 @@ const DevBox = (prop: HandleLoadingFunc) => {
         page: 1
     })
     
-    const pages = new Array(pageTotal).fill(null).map((v, i) => i)
-    // const pagesSlice = pages.slice(queryObject.page, queryObject.page + 5)
-    const pagesSlice = pages.slice(pageNumbersDisplayed[0], pageNumbersDisplayed[1])
+    // const pages = new Array(pageTotal).fill(null).map((v, i) => i)
+    // // const pagesSlice = pages.slice(queryObject.page, queryObject.page + 5)
+    // const pagesSlice = pages.slice(pageNumbersDisplayed[0], pageNumbersDisplayed[1])
 
     // pagesSlice needs to be a slice of five at a time out of the page total.
     // Instead of slicing on the queryObject.page, this should maintain its own state.
@@ -74,12 +74,12 @@ const DevBox = (prop: HandleLoadingFunc) => {
         })
     }
 
-    const handlePaginationNumberClick = (arg: number) => {
-        setQueryObject({
-            ...queryObject,
-            page: arg
-        })
-    }
+    // const handlePaginationNumberClick = (arg: number) => {
+    //     setQueryObject({
+    //         ...queryObject,
+    //         page: arg
+    //     })
+    // }
 
     const handlePageViewUpOrDown = (arg: boolean) => {
         const pageArrayCopy = [...pageNumbersDisplayed]
@@ -121,19 +121,20 @@ const DevBox = (prop: HandleLoadingFunc) => {
             <div className="allDevsContainer">
                 {devList}
             </div>
-            
+
             <Pagination 
                 totalPages={pageTotal}
                 currentPage={queryObject.page}
+                pageNumbers={pageNumbersDisplayed}
                 onPageChange={(newPage) => {
                     setQueryObject({ ...queryObject, page: newPage })
                 }}
             />
 
             <button onClick={() => handlePageViewUpOrDown(false)}>less than</button>
-            {pagesSlice.map((pageIndex) => (
+            {/* {pagesSlice.map((pageIndex) => (
                 <button key={pageIndex} onClick={() => handlePaginationNumberClick(pageIndex)}>{pageIndex}</button>
-            ))}
+            ))} */}
             <button onClick={() => handlePageViewUpOrDown(true)}>greater than</button>
         </div>
     </>

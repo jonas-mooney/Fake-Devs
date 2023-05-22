@@ -18,8 +18,8 @@ const app = express()
 // });
 // opening access to private networks due to the CORS error https://medium.com/@dtkatz/3-ways-to-fix-the-cors-error-and-how-access-control-allow-origin-works-d97d55946d9#:~:text=Fix%20three%3A%20build%20your%20own%20proxy
 
-// app.use(cors({ origin: "http://localhost:5173" }))
-app.use(cors({ origin: "http://127.0.0.1:5173" }))
+app.use(cors({ origin: "http://localhost:5173" }))
+// app.use(cors({ origin: "http://127.0.0.1:5173" }))
 // second CORS error solution from fireship.io Youtube video
 
 

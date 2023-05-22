@@ -25,6 +25,7 @@ function App() {
           <Route path="/" element={<Layout />}>
             <Route index element={<Body handleLoading={handleLoading}/>} />
             <Route path="*" element={<NoPage />} />
+            <Route path="/login" element={<NoPage />} />
           </Route>
         </Routes>
       </BrowserRouter>

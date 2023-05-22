@@ -1,4 +1,5 @@
 import DevBox from "./DevBox"
+import HomePage from "./HomePage";
 import Filters from "./Filters"
 import '../App.scss'
 
@@ -10,6 +11,7 @@ const Body = (prop: HandleLoadingFunc) => {
   
   return (
     <div className="body-content">
+      <HomePage />
       <DevBox handleLoading={prop.handleLoading} />
     </div>
   )

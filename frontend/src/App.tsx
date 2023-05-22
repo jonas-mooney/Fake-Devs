@@ -24,6 +24,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Layout />}>
             <Route index element={<Body handleLoading={handleLoading}/>} />
+            <Route path="/devs" element={<Body handleLoading={handleLoading}/>} />
             <Route path="*" element={<NoPage />} />
             <Route path="/login" element={<NoPage />} />
           </Route>
@@ -35,3 +36,11 @@ function App() {
 }
 
 export default App
+
+// Page hierarchy
+// Landing page (With index set to display Body component)
+//    /body
+//      /devs
+//      /login
+//      /signup
+// No Page

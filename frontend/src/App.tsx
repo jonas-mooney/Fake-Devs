@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import Body from './components/Body'
 import NoPage from './components/NoPage'
 import Layout from './components/Layout'
+import LoginPage from './components/Login'
 import './App.scss'
 import { useState } from 'react'
 
@@ -23,10 +24,8 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Layout />}>
-            <Route index element={<Body handleLoading={handleLoading}/>} />
-            <Route path="/devs" element={<Body handleLoading={handleLoading}/>} />
+            <Route index element={<Body />} />
             <Route path="*" element={<NoPage />} />
-            <Route path="/login" element={<NoPage />} />
           </Route>
         </Routes>
       </BrowserRouter>

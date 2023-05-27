@@ -10,7 +10,7 @@ interface HandleLoadingFunc {
     handleLoading: (arg: boolean) => void;
 }
 
-const DevBox = (prop: HandleLoadingFunc) => {
+const DevBox = () => {
     const [devs, setDevs] = useState([])
     const [pageTotal, setPageTotal] = useState(0)
     const [pageNumbersDisplayed, setPageNumbersDisplayed] = useState<Array<number>>([1, 6])

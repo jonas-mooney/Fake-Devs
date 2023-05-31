@@ -1,16 +1,16 @@
+import { Routes, Route } from 'react-router-dom'
+import '../App.scss'
 import DevBox from "./DevBox"
 import HomePage from "./HomePage";
-import Filters from "./Filters"
 import LoginPage from "./Login";
-import '../App.scss'
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import SignUpPage from "./SignUp";
+import NoPage from "./NoPage";
 
+interface BodyProps {
+  children: React.ReactNode;
+}
 
-// interface HandleLoadingFunc {
-//   handleLoading: (arg: boolean) => void;
-// }
-
-const Body = () => {
+const Body = (children: BodyProps) => {
   
   return (
     <div className="body-content">
@@ -18,8 +18,9 @@ const Body = () => {
           <Route path="/" element={<HomePage />} />
           <Route path="/devs" element={<DevBox />} />
           <Route path="/login" element={<LoginPage />} />
+          <Route path="/signUp" element={<SignUpPage />} />
+          <Route path="*" element={<NoPage />} />
         </Routes>
-
     </div>
   )
 }

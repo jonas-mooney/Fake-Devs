@@ -18,7 +18,7 @@ const Body = (children: BodyProps) => {
           <Route path="/" element={<HomePage />} />
           <Route path="/devs" element={<DevBox />} />
           <Route path="/login" element={<LoginPage />} />
-          <Route path="/signUp" element={<SignUpPage />} />
+          <Route path="/signup" element={<SignUpPage />} />
           <Route path="*" element={<NoPage />} />
         </Routes>
     </div>

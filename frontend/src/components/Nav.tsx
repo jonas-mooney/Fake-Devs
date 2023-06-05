@@ -11,13 +11,13 @@ const Nav = () => {
       </Link>
       <ul className="navItems">
         <li>
-          <Link to="devs">Find Talent</Link>
+          <Link to="/devs">Find Talent</Link>
         </li>
         <li>Post Listing</li>
         <li>For Devs</li>
       </ul>
       <span className="navButtons">
-        <Link to="/signUp">
+        <Link to="/signup">
         <button className="b1">Sign Up</button>
         </Link>
         <Link to="/login">

@@ -3,12 +3,20 @@ const mongoose = require('mongoose')
 const devSchema = mongoose.Schema({
   first_name: {
     type: String,
+    required: [true, "Please add a first name"]
   },
   last_name: {
     type: String,
+    required: [true, "Please add a last name"]
   },
   email: {
     type: String,
+    required: [true, 'Please add an email'],
+    unique: true
+  },
+  password: {
+    type: String,
+    required: [true, 'Please add a password']
   },
   hourly_rate: {
     type: Number,
@@ -16,6 +24,10 @@ const devSchema = mongoose.Schema({
   star_rating: {
     type: Number,
   }
-})
+},
+{
+  timestamps: true
+}
+)
 
 module.exports = mongoose.model('Dev', devSchema)

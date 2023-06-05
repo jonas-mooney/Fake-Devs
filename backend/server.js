@@ -30,7 +30,7 @@ app.use(express.urlencoded({extended: false}))
 
 // app.use('/api/goals', require('./routes/goalRoutes'))
 app.use('/devs', require('./routes/devRoutes'))
-app.use('/', require('./routes/devRoutes'))
+app.use('/userAuth', require('./routes/userRoutes'))
 
 app.use(errorHandler)
 

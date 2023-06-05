@@ -5,7 +5,7 @@ const {
   getFilteredDevs,
 } = require('../controllers/devController')
 
-router.route('/devs').post(getFilteredDevs)
+router.route('/').post(getFilteredDevs)
 
 
 module.exports = router
